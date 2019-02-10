@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Posts = require("./post");
+//const Posts = require("./post");
 
 
 const userSchema = mongoose.Schema();
@@ -13,7 +13,7 @@ userSchema.add({
   	type:String,
   	unique: true
   },
-  postPosted: [Posts.schema],
+  //postPosted: [Posts.schema],
   followers: {type: Number, default: '0'},
   usersFollowing: [userSchema]
 });
