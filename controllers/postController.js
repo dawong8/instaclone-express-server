@@ -48,22 +48,20 @@ router.post('/', (req, res) => {
   upload(req, res, (err) => {
     if (err) {
       res.json(err);
-      console.log('eror?', err);
-      console.log('req.file', req.file);
+
 
     } else {
-      console.log('what????????????????????????')
       if (req.file == undefined) { // typeof req.file === 'undefined', check if there is actually an image uploaded 
         res.json(err);
       } else {
 
-        const createdPost = Post.create({ picture: `uploads/${req.file.filename}`});
-        console.log('Are we going here?');
+        const createdPost = Post.create({ picture: `uploads/${req.file.filename}`, description: req.body.description});
 
         res.json({
           msg: 'file uploaded', 
           file: `uploads/${req.file.filename}`, 
           data: createdPost
+
         });
       }
     }
