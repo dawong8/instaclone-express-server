@@ -19,6 +19,7 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+app.use(express.static('public'));
 
 const corsOptions = {
   origin: 'https://localhost:3000',
@@ -31,12 +32,12 @@ app.use(cors(corsOptions));
 
 
 // Require the controller after the middleware
-//const postController = require('./controllers/postController');
-//const userController  = require('./controllers/userController');
+const postController = require('./controllers/postController');
+const userController  = require('./controllers/userController');
 const authController = require('./controllers/authController');
 
-//app.use('/api/v1/post', postController);
-//app.use('/api/v1/user', userController);
+app.use('/api/v1/post', postController);
+app.use('/api/v1/user', userController);
 app.use('/auth', authController);
 
 app.listen(process.env.PORT || 9000, () => {

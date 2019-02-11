@@ -1,8 +1,74 @@
 const express = require('express');
 const router  = express.Router();
+const path = require("path");
 
 const Comment = require("../models/comment");
 const Post = require("../models/post");
+
+const multer = require('multer');
+// multer 
+
+const storage = multer.diskStorage({
+  destination: './public/uploads/',
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); 
+  }
+});
+
+
+const upload = multer({
+  storage: storage, 
+  limits: {fileSize: 1000000}, // 1 MB
+  fileFilter: function (req, file, cb) {
+    checkFileType(file, cb)
+  }
+}).single('myImage'); // name: 'picture' in form 
+
+
+function checkFileType(file, cb) { // checks file type, 
+  //allowed extensions
+  const filetypes = /jpeg|jpg|png|gif/;
+
+  //check ext 
+
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+  // check mime type 
+  const mimetype = filetypes.test(file.mimetype);
+
+  if (mimetype && extname) {
+    return cb(null, true); 
+  } else {
+    cb('Error: Images only!');
+  }
+}
+
+router.post('/', (req, res) => {
+
+  upload(req, res, (err) => {
+    if (err) {
+      res.json(err);
+
+
+    } else {
+      if (req.file == undefined) { // typeof req.file === 'undefined', check if there is actually an image uploaded 
+        res.json(err);
+      } else {
+
+        const createdPost = Post.create({ picture: `uploads/${req.file.filename}`, description: req.body.description});
+
+        res.json({
+          msg: 'file uploaded', 
+          file: `uploads/${req.file.filename}`, 
+          data: createdPost
+
+        });
+      }
+    }
+  }); 
+}); 
+
+
 
 // post INDEX
 router.get('/', (req, res) => {
