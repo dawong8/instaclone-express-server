@@ -22,9 +22,9 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: '*', // changed to wildcard, bc of that https issue 
   credentials: true, // This allows the session cookie to be sent back and forth
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 app.use(cors(corsOptions));
 
