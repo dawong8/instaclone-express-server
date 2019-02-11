@@ -42,11 +42,12 @@ router.post('/', async (req, res) => {
 router.post('/login', async (req, res) => {
 
 	try {
-
-		const foundUser = await Users.findOne({username: req.body.username});
-
+		console.log("Req body", req.body);
+		const foundUser = await User.findOne({username: req.body.username});
+		console.log("Found User: ", foundUser);
 		if(foundUser) {
 			if (bcrypt.compareSync(req.body.password, foundUser.password)) {
+				// console.log("Req body", req.body);
 				req.session.message = '';
 				req.session.username = foundUser.username;
 				req.session.logged = true;
@@ -55,7 +56,7 @@ router.post('/login', async (req, res) => {
 			    res.json({
 			      status: 200,
 			      data: 'login successful'
-			    });s
+			    });
 				//successful login
 
 			}else {

@@ -2,35 +2,34 @@ const express = require('express');
 const router  = express.Router();
 
 const Comment = require("../models/comment");
-const Post = require("../models/post");
 
-// post INDEX
+// USER INDEX
 router.get('/', (req, res) => {
-  Post.find({}, (err, allUsers) => {
+  Comment.find({}, (err, allUsers) => {
     if (err) res.json(err);
     res.json(allUsers);
   });
 });
 
-// post SHOW
+// USER SHOW
 router.get('/:id', (req, res) => {
-  Post.findById(req.params.id, (err, foundUser) => {
+  Comment.findById(req.params.id, (err, foundUser) => {
     if (err) res.json(err);
     res.json(foundUser);
   });
 });
 
-// ALL Post'S Comments
-router.get('/:id/comments', (req, res) => {
-  Comment.find({userId: req.params.id}, (err, foundPosts) => {
-    if (err) res.json(err);
-    res.json(foundPosts);
-  });
-});
+// // ALL comment'S Comments
+// router.get('/:id/comments', (req, res) => {
+//   Comment.find({userId: req.params.id}, (err, foundPosts) => {
+//     if (err) res.json(err);
+//     res.json(foundPosts);
+//   });
+// });
 
 // Post UPDATE, do we want to update?
 router.put('/:id', (req, res) => {
-  Post.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, updatedUser) => {
+  Comment.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, updatedUser) => {
     if (err) res.json(err);
     res.json(updatedUser);
   });
@@ -38,7 +37,7 @@ router.put('/:id', (req, res) => {
 
 // Post DESTROY
 router.delete('/:id', (req, res) => {
-  Post.findByIdAndRemove(req.params.id, (err, deletedUser) => {
+  Comment.findByIdAndRemove(req.params.id, (err, deletedUser) => {
     if (err) res.json(err);
     // res.json(deletedUser);
     res.json({success: `User was removed.`})
