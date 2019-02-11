@@ -3,6 +3,10 @@ const router  = express.Router();
 
 const Comment = require("../models/comment");
 
+
+
+// post request not yet done 
+
 // USER INDEX
 router.get('/', (req, res) => {
   Comment.find({}, (err, allUsers) => {

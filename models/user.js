@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 
 const userSchema = mongoose.Schema();
@@ -13,12 +14,9 @@ userSchema.add({
   	unique: true
   },
 
-  //postPosted: [Posts.schema],
   followers: {type: Number, default: '0'},
   usersFollowing: [userSchema]
 });
 
 
-// Exporting the whole fruits array
-// and it will be named whatever we require as
 module.exports = mongoose.model('User', userSchema);
