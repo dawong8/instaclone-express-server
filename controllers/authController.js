@@ -40,7 +40,8 @@ router.post('/', async (req, res) => {
 
     res.json({
       status: 200,
-      data: 'register successful'
+      data: 'register successful',
+      userId: user._id
     });
 
 
@@ -68,7 +69,8 @@ router.post('/login', async (req, res) => {
 
 			    res.json({
 			      status: 200,
-			      data: 'login successful'
+			      data: 'login successful',
+			      userId: foundUser._id
 			    });
 				//successful login
 
@@ -109,6 +111,24 @@ router.get('/logout', (req, res) => {
     	});
     }
   });
+});
+
+
+router.put('/userInfo/:id', async(req, res) =>{
+	try{
+		console.log("Req body from auth: ",req.body);
+		const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new:true});
+		console.log("Updated user: ", updatedUser);
+		res.json({
+			status: 200,
+			data: 'user updated',
+			updatedUser: updatedUser
+		});
+	}
+
+	catch(err){
+		res.json(err);
+	}
 });
 
 module.exports = router;
