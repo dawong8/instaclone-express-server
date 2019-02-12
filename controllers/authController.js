@@ -4,7 +4,14 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/user");
 
 
-
+router.get('/',  async (req, res) => {
+	console.log('getting called')
+	const foundUser = await User.findOne({username: req.session.username});
+	console.log("Found User??? ", foundUser);
+	res.json({
+		user: foundUser
+	});
+});
 
 // register : 
 router.post('/', async (req, res) => {
