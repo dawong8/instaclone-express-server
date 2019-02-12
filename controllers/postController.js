@@ -45,7 +45,7 @@ function checkFileType(file, cb) { // checks file type,
 
 router.post('/', (req, res) => {
 
-  upload(req, res, (err) => {
+  upload(req, res, async (err) => {
     if (err) {
       res.json(err);
 
@@ -54,9 +54,9 @@ router.post('/', (req, res) => {
       if (req.file == undefined) { // typeof req.file === 'undefined', check if there is actually an image uploaded 
         res.json(err);
       } else {
-
-        const createdPost = Post.create({ picture: `uploads/${req.file.filename}`, description: req.body.description});
-
+        console.log("Session object from postController: ", req.session);
+        const createdPost = await Post.create({ picture: `uploads/${req.file.filename}`, description: req.body.description, userId: req.session.userId});
+        console.log("Created post: ", createdPost);
         res.json({
           msg: 'file uploaded', 
           file: `uploads/${req.file.filename}`, 

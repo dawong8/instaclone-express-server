@@ -19,9 +19,13 @@ router.post('/', async (req, res) => {
   try {
 
     const user = await User.create(userDbEntry);
+    console.log("Posted user: ", user);
 
     req.session.logged = true;
     req.session.username = req.body.username;
+    req.session.userId = user._id;
+
+    console.log("Session: ", req.session);
 
 
 
