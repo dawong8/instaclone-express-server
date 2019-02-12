@@ -37,7 +37,9 @@ function checkFileType(file, cb) { // checks file type,
   const mimetype = filetypes.test(file.mimetype);
 
   if (mimetype && extname) {
+
     return cb(null, true); 
+
   } else {
     cb('Error: Images only!');
   }
@@ -45,22 +47,21 @@ function checkFileType(file, cb) { // checks file type,
 
 router.post('/', (req, res) => {
 
-  upload(req, res, async (err) => {
+  upload(req, res,  async (err) => {
     if (err) {
       res.json(err);
-
 
     } else {
       if (req.file == undefined) { // typeof req.file === 'undefined', check if there is actually an image uploaded 
         res.json(err);
       } else {
-        console.log("Session object from postController: ", req.session);
-        const createdPost = await Post.create({ picture: `uploads/${req.file.filename}`, description: req.body.description, userId: req.session.userId});
-        console.log("Created post: ", createdPost);
+
+        const createdPost = await Post.create({ picture: `uploads/${req.file.filename}`, description: req.body.description});
+
         res.json({
           msg: 'file uploaded', 
           file: `uploads/${req.file.filename}`, 
-          data: createdPost
+          newPost: createdPost
 
         });
       }

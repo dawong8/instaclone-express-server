@@ -22,9 +22,10 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 const corsOptions = {
-  origin: 'https://localhost:3000',
+  origin: 'https://localhost:3000', 
+
   credentials: true, // This allows the session cookie to be sent back and forth
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 app.use(cors(corsOptions));
 
@@ -38,7 +39,7 @@ const authController = require('./controllers/authController');
 
 app.use('/api/v1/post', postController);
 app.use('/api/v1/user', userController);
-app.use('/auth', authController);
+app.use('/api/v1/auth', authController);
 
 app.listen(process.env.PORT || 9000, () => {
   console.log('listening on port 9000');
