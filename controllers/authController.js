@@ -8,6 +8,8 @@ router.get('/',  async (req, res) => {
 	console.log('getting called')
 	const foundUser = await User.findOne({username: req.session.username});
 	console.log("Found User??? ", foundUser);
+
+	console.log('===================', 'this is my session id', req.session.userId);
 	res.json({
 		user: foundUser
 	});
@@ -33,8 +35,6 @@ router.post('/', async (req, res) => {
     req.session.logged = true;
     req.session.username = req.body.username;
     req.session.userId = user._id;
-
-    console.log("Session: ", req.session);
 
 
 
@@ -65,6 +65,7 @@ router.post('/login', async (req, res) => {
 				req.session.message = '';
 				req.session.username = foundUser.username;
 				req.session.logged = true;
+				req.session.userId = foundUser._id;
 
 
 			    res.json({
@@ -72,6 +73,8 @@ router.post('/login', async (req, res) => {
 			      data: 'login successful',
 			      userId: foundUser._id
 			    });
+
+			    console.log('login in auth route: session.userid', req.session.userId);
 				//successful login
 
 			}else {
