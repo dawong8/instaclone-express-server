@@ -36,10 +36,12 @@ app.use(cors(corsOptions));
 const postController = require('./controllers/postController');
 const userController  = require('./controllers/userController');
 const authController = require('./controllers/authController');
+const commentController = require('./controllers/commentController');
 
 app.use('/api/v1/post', postController);
 app.use('/api/v1/user', userController);
 app.use('/api/v1/auth', authController);
+app.use('/api/v1/comment', commentController);
 
 app.listen(process.env.PORT || 9000, () => {
   console.log('listening on port 9000');
