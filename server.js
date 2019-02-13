@@ -23,6 +23,7 @@ app.use(express.static('public'));
 
 const corsOptions = {
   origin: 'https://localhost:3000', 
+
   credentials: true, // This allows the session cookie to be sent back and forth
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
