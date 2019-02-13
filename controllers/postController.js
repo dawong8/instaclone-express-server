@@ -56,14 +56,21 @@ router.post('/', (req, res) => {
         res.json(err);
       } else {
 
-        const createdPost = await Post.create({ picture: `uploads/${req.file.filename}`, description: req.body.description});
+        const createdPost = await Post.create({ picture: `uploads/${req.file.filename}`, description: req.body.description, owner: req.session.username});
 
-        res.json({
-          msg: 'file uploaded', 
-          file: `uploads/${req.file.filename}`, 
-          newPost: createdPost
+        createdPost.userId = req.session.userId;
+
+        createdPost.save((err, savedPost) => {
+          res.json({
+            msg: 'file uploaded', 
+            file: `uploads/${req.file.filename}`, 
+            newPost: savedPost,  // shouldnt this be savedPost?
+
+          });
+
 
         });
+        
       }
     }
   }); 
@@ -73,6 +80,7 @@ router.post('/', (req, res) => {
 
 // post INDEX
 router.get('/', (req, res) => {
+
   Post.find({}, (err, allUsers) => {
     if (err) res.json(err);
     res.json(allUsers);
@@ -104,7 +112,9 @@ router.put('/:id', (req, res) => {
 });
 
 // Post DESTROY
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
+  const deleted = await Comment.deleteMany({ postId: req.params.id });
+  console.log('deleted comments (this should be array?)', deleted);
   Post.findByIdAndRemove(req.params.id, (err, deletedUser) => {
     if (err) res.json(err);
     // res.json(deletedUser);
