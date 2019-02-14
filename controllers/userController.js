@@ -39,9 +39,10 @@ router.put('/:id', (req, res) => {
 // USER DESTROY
 router.delete('/:id', (req, res) => {
   User.findByIdAndRemove(req.params.id, (err, deletedUser) => {
+    console.log("Deleted user: ", deletedUser);
     if (err) res.json(err);
     // res.json(deletedUser);
-    res.json({success: `User was removed.`})
+    res.json({success: 'User was removed'})
   });
 });
 
