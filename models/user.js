@@ -18,7 +18,7 @@ userSchema.add({
   followers: {type: Number, default: '0'},
   
   // people that you are following
-  usersFollowing: [userSchema]
+  usersFollowing: [String]
 });
 
 
