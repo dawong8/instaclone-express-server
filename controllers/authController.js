@@ -121,7 +121,13 @@ router.get('/logout', (req, res) => {
 router.put('/userInfo/:id', async(req, res) =>{
 	try{
 		console.log("Req body from auth: ",req.body);
-		const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new:true});
+		let modifyDetailsObject = {};
+		modifyDetailsObject = req.body;
+		const password = req.body.password;
+		const hashedPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+		modifyDetailsObject.password = hashedPassword;
+		console.log("Modify details object: ",modifyDetailsObject);
+		const updatedUser = await User.findByIdAndUpdate(req.params.id, modifyDetailsObject, {new:true});
 		console.log("Updated user: ", updatedUser);
 		res.json({
 			status: 200,
