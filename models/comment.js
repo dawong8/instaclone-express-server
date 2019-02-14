@@ -8,6 +8,10 @@ commentSchema.add({
   description: String, 
   likes: {type: Number, default: 0}, 
   // comments: [String], 
+  // whoLiked: [ {
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'User'
+  // } ],
   
   postId: {
     type: Schema.Types.ObjectId,
