@@ -27,9 +27,9 @@ router.post('/', async (req, res) => {
 
 // GET ALL COMMENTS IN DATABASE 
 router.get('/', (req, res) => {
-  Comment.find({}, (err, allUsers) => {
+  Comment.find({}, (err, allComments) => {
     if (err) res.json(err);
-    res.json(allUsers);
+    res.json(allComments);
   });
 });
 
@@ -37,9 +37,11 @@ router.get('/', (req, res) => {
 // GET ALL COMMENTS THAT BELONG TO A SPECIFIC comment 
 router.get('/post/:id', async (req, res) => {
   try {
-    const foundPost = await Comment.find({ postId: req.params.id });
+    const foundComment = await Comment.find({ postId: req.params.id })
+      .populate('children')
 
-    res.json(foundPost);
+
+    res.json(foundComment);
 
   } catch (err) {
     return err; 
@@ -49,11 +51,16 @@ router.get('/post/:id', async (req, res) => {
 });
 
 // LOOK AT THAT PARTICULAR comment
-router.get('/:id', (req, res) => {
-  Comment.findById(req.params.id, (err, foundUser) => {
-    if (err) res.json(err);
-    res.json(foundUser);
-  });
+router.get('/:id', async (req, res) => {
+
+  try {
+    const foundComment = await Comment.findById(req.params.id).populate('children');
+    res.json(foundComment);
+  } catch (err) {
+    return err; 
+  }
+
+
 });
 
 // // ALL comment'S Comments

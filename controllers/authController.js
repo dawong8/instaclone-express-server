@@ -56,9 +56,9 @@ router.post('/', async (req, res) => {
 router.post('/login', async (req, res) => {
 
 	try {
-		console.log("Req body", req.body);
+		//console.log("Req body", req.body);
 		const foundUser = await User.findOne({username: req.body.username});
-		console.log("Found User: ", foundUser);
+		//console.log("Found User: ", foundUser);
 		if(foundUser) {
 			if (bcrypt.compareSync(req.body.password, foundUser.password)) {
 				// console.log("Req body", req.body);
@@ -70,7 +70,8 @@ router.post('/login', async (req, res) => {
 
 			    res.json({
 			      status: 200,
-			      data: 'login successful',
+			      data: 'login successful', 
+
 			      userId: foundUser._id
 			    });
 
