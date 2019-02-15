@@ -103,6 +103,9 @@ router.get('/:id/comments', (req, res) => {
   });
 });
 
+
+
+
 // Post UPDATE, do we want to update?
 router.put('/:id', (req, res) => {
   Post.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, updatedUser) => {
