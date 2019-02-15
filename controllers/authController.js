@@ -3,6 +3,7 @@ const router  = express.Router();
 const bcrypt = require("bcryptjs");
 const User = require("../models/user");
 
+// Small change for testing
 
 router.get('/',  async (req, res) => {
 	console.log('getting called')
